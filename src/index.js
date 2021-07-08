@@ -1,11 +1,10 @@
 // Require the framework and instantiate it
 const fastify = require('fastify')({ logger: true });
+const taskRoutes = require('./routes/tasks.routes');
+const dbconnector = require('./db/db');
 
-// Declare a route
-fastify.get('/', async (request, reply) => {
-  return { hello: 'world' };
-});
-
+fastify.register(dbconnector);
+fastify.register(taskRoutes);
 // Run the server!
 const start = async () => {
   try {

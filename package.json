@@ -9,7 +9,12 @@
   "author": "Tshepiso Mogapi",
   "license": "ISC",
   "dependencies": {
-    "fastify": "^3.18.1"
+    "dotenv": "^10.0.0",
+    "fastify": "^3.18.1",
+    "fastify-plugin": "^3.0.0",
+    "nanoid": "^3.1.23",
+    "pg": "^8.6.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "eslint": "^7.30.0",
