@@ -1,20 +1,25 @@
-const { v4: uuidv4 } = require('uuid');
-const { getAllTasks, createTask } = require('../schemas/task.schema');
+const {v4: uuidv4} = require('uuid');
+const {
+  getAllTasks,
+  createTask,
+  updateTask,
+} = require('../schemas/task.schema');
 
-async function routes(fastify, options) {
-  const { client } = fastify.db;
-  fastify.get('/', { schema: getAllTasks }, async (request, reply) => {
+const models = require('../../models/index')
+
+async function routes(fastify) {
+  const {client} = fastify.db;
+  fastify.get('/', {schema: getAllTasks}, async (request, reply) => {
     try {
-      const { rows } = await client.query('SELECT * FROM tasks');
-      console.log(rows);
-      reply.send(rows);
+      const tasks = await models.Task.findAll({})
+      reply.send(tasks);
     } catch (err) {
       throw new Error(err);
     }
   });
 
-  fastify.post('/', { schema: createTask }, async (request, reply) => {
-    const { name } = request.body;
+  fastify.post('/', {schema: createTask}, async (request, reply) => {
+    const {name} = request.body;
     const id = uuidv4();
     const query = {
       text: `INSERT INTO tasks (id, name)
@@ -22,14 +27,30 @@ async function routes(fastify, options) {
       values: [id, name],
     };
     console.log('\n\n\n');
-    console.log(query);
-    console.log('\n\n\n');
 
     try {
-      const { rows } = await client.query(query);
-      // console.log(rows[0]);
+      const {rows} = await client.query(query);
+      console.log(rows[0]);
       reply.code(201);
-      return { created: true };
+      return {created: true};
+    } catch (err) {
+      throw new Error(err);
+    }
+  });
+
+  fastify.patch('/:id', {schema: updateTask}, async (request, reply) => {
+    const {id} = request.params;
+    const {name} = request.body;
+    const query = {
+      text: `UPDATE tasks SET 
+                            name = COALESCE($1, name), 
+                            WHERE id = $2 RETURNING *`,
+      values: [name, id],
+    };
+    try {
+      const {rows} = await client.query(query);
+      console.log(rows[0]);
+      reply.code(204);
     } catch (err) {
       throw new Error(err);
     }

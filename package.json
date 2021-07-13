@@ -4,7 +4,11 @@
   "description": "basic api based on fastify ",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/index.js"
+    "start": "nodemon src/index.js",
+    "db:create": "sequelize-cli db:create",
+    "db:migrate": "sequelize-cli db:migrate",
+    "db:g:seed": "sequelize-cli seed:generate --name",
+    "db:seeds": "sequelize-cli db:seed:all"
   },
   "author": "Tshepiso Mogapi",
   "license": "ISC",
@@ -14,12 +18,16 @@
     "fastify-plugin": "^3.0.0",
     "nanoid": "^3.1.23",
     "pg": "^8.6.0",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.6.5",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
     "eslint": "^7.30.0",
     "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-google": "^0.14.0",
     "eslint-plugin-import": "^2.23.4",
-    "nodemon": "^2.0.9"
+    "nodemon": "^2.0.9",
+    "sequelize-cli": "^6.2.0"
   }
 }

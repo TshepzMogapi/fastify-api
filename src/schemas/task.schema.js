@@ -4,14 +4,10 @@ const getAllTasks = {
       type: 'array',
       items: {
         type: 'object',
-        required: ['id', 'name', 'createdAt', 'important', 'dueDate', 'done'],
+        required: ['id', 'name'],
         properties: {
-          id: { type: 'string', format: 'uuid' },
-          name: { type: 'string' },
-          createdAt: { type: 'string', format: 'date-time' },
-          important: { type: 'boolean' },
-          dueDate: { type: 'string', format: 'date-time' },
-          done: { type: 'boolean' },
+          id: {type: 'string', format: 'uuid'},
+          name: {type: 'string'},
         },
       },
     },
@@ -23,14 +19,14 @@ const createTask = {
     type: 'object',
     required: ['name'],
     properties: {
-      name: { type: 'string' },
+      name: {type: 'string'},
     },
   },
   response: {
     201: {
       type: 'object',
       properties: {
-        created: { type: 'boolean' },
+        created: {type: 'boolean'},
       },
     },
   },
@@ -40,15 +36,13 @@ const updateTask = {
   body: {
     type: 'object',
     properties: {
-      dueDate: { type: 'string', format: 'date-time' },
-      important: { type: 'boolean' },
-      done: { type: 'boolean' },
+      name: {type: 'string'},
     },
   },
   params: {
     type: 'object',
     properties: {
-      id: { type: 'string', format: 'uuid' },
+      id: {type: 'string'},
     },
   },
 };
@@ -57,7 +51,7 @@ const deleteTask = {
   params: {
     type: 'object',
     properties: {
-      id: { type: 'string', format: 'uuid' },
+      id: {type: 'string', format: 'uuid'},
     },
   },
 };

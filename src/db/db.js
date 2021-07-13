@@ -1,5 +1,5 @@
 const fastifyPlugin = require('fastify-plugin');
-const { Client } = require('pg');
+const {Client} = require('pg');
 require('dotenv').config();
 
 const client = new Client({
@@ -14,7 +14,7 @@ async function dbconnector(fastify, options) {
     console.log(client.database);
     await client.connect();
     console.log('db connected succesfully');
-    fastify.decorate('db', { client });
+    fastify.decorate('db', {client});
   } catch (err) {
     console.error(err);
   }
