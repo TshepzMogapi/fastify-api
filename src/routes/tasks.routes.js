@@ -3,9 +3,10 @@ const {
   getAllTasks,
   createTask,
   updateTask,
+  deleteTask,
 } = require('../schemas/task.schema');
 
-const models = require('../../models/index')
+const models = require('../../models/index');
 
 async function routes(fastify) {
   const {client} = fastify.db;
@@ -19,20 +20,14 @@ async function routes(fastify) {
   });
 
   fastify.post('/', {schema: createTask}, async (request, reply) => {
-    const {name} = request.body;
-    const id = uuidv4();
-    const query = {
-      text: `INSERT INTO tasks (id, name)
-      VALUES($1, $2 ) RETURNING *`,
-      values: [id, name],
-    };
-    console.log('\n\n\n');
-
+    const {name, description} = request.body;
+    // const id = uuidv4();
     try {
-      const {rows} = await client.query(query);
-      console.log(rows[0]);
-      reply.code(201);
-      return {created: true};
+      const task = await models.Task.create({
+        name: name,
+        description: description
+      })
+      reply.send(task);
     } catch (err) {
       throw new Error(err);
     }
@@ -55,5 +50,20 @@ async function routes(fastify) {
       throw new Error(err);
     }
   });
+
+  fastify.delete('/:id', {schema: deleteTask}, async function(request, reply) {
+    console.log(request.params)
+    try {
+        console.log('QWERTY');
+        await models.Task.destroy({
+          where:{
+            id: request.params.id
+          }
+        });
+        reply.code(204)
+    } catch(err) {
+            throw new Error(err)
+    }
+})
 }
 module.exports = routes;

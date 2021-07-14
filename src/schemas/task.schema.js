@@ -4,10 +4,11 @@ const getAllTasks = {
       type: 'array',
       items: {
         type: 'object',
-        required: ['id', 'name'],
+        required: ['id', 'name', 'description'],
         properties: {
           id: {type: 'string', format: 'uuid'},
           name: {type: 'string'},
+          description: {type: 'string'},
         },
       },
     },
@@ -17,9 +18,10 @@ const getAllTasks = {
 const createTask = {
   body: {
     type: 'object',
-    required: ['name'],
+    required: ['name', 'description'],
     properties: {
       name: {type: 'string'},
+      description: {type: 'string'},
     },
   },
   response: {
@@ -51,7 +53,7 @@ const deleteTask = {
   params: {
     type: 'object',
     properties: {
-      id: {type: 'string', format: 'uuid'},
+      id: {type: 'string'},
     },
   },
 };
