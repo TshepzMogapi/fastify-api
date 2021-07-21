@@ -8,11 +8,12 @@ const {
 
 const models = require('../../models/index');
 
+const taskService = require('../services/task.service');
+
 async function routes(fastify) {
-  const {client} = fastify.db;
   fastify.get('/', {schema: getAllTasks}, async (request, reply) => {
     try {
-      const tasks = await models.Task.findAll({})
+      const tasks = await taskService.getAllTasks();
       reply.send(tasks);
     } catch (err) {
       throw new Error(err);
@@ -21,9 +22,8 @@ async function routes(fastify) {
 
   fastify.post('/', {schema: createTask}, async (request, reply) => {
     const {name, description} = request.body;
-    // const id = uuidv4();
     try {
-      const task = await models.Task.create({
+      const task = taskService.createTask({
         name: name,
         description: description
       })
