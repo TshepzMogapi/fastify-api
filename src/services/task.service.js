@@ -1,4 +1,4 @@
-const models = require('../../models/index');
+const models = require('../db/models/index');
 
 
 const getAllTasks = async(dto) => {

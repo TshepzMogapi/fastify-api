@@ -6,12 +6,13 @@ const {
   deleteTask,
 } = require('../schemas/task.schema');
 
-const models = require('../../models/index');
+// const models = require('../../models/index');
+const models = require('../db/models/index');
 
 const taskService = require('../services/task.service');
 
 async function routes(fastify) {
-  fastify.get('/', {schema: getAllTasks}, async (request, reply) => {
+  fastify.get('/tasks/', {schema: getAllTasks}, async (request, reply) => {
     try {
       const tasks = await taskService.getAllTasks();
       reply.send(tasks);
@@ -20,7 +21,7 @@ async function routes(fastify) {
     }
   });
 
-  fastify.post('/', {schema: createTask}, async (request, reply) => {
+  fastify.post('/tasks/', {schema: createTask}, async (request, reply) => {
     const {name, description} = request.body;
     try {
       const task = taskService.createTask({
@@ -33,7 +34,7 @@ async function routes(fastify) {
     }
   });
 
-  fastify.patch('/:id', {schema: updateTask}, async (request, reply) => {
+  fastify.patch('/tasks/:id', {schema: updateTask}, async (request, reply) => {
     const {id} = request.params;
     const {name,description} = request.body;
 
@@ -54,7 +55,7 @@ async function routes(fastify) {
     }
   });
 
-  fastify.delete('/:id', {schema: deleteTask}, async function(request, reply) {
+  fastify.delete('/tasks/:id', {schema: deleteTask}, async function(request, reply) {
     console.log(request.params)
     try {
         await models.Task.destroy({
