@@ -1,0 +1,10 @@
+version: '3'
+services:
+  fastify-api:
+    build:
+      context: .
+      args:
+        ENV: production
+    environment:
+      - ENV=production
+    command: npm run start

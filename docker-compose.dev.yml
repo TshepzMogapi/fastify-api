@@ -1,0 +1,13 @@
+version: '3'
+services:
+  fastify-api:
+    build:
+      context: .
+      args:
+        ENV: development
+    volumes:
+      - ./:/app:ro
+      - /app/node_modules
+    environment:
+      - ENV=development
+    command: npm run dev
