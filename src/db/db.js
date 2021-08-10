@@ -3,11 +3,11 @@ const {Client} = require('pg');
 require('dotenv').config();
 
 const client = new Client({
-  user: 'postgres',
-  password: process.env.PASSWORD,
-  host: 'localhost',
-  port: 5432,
-  database: process.env.DATABASE,
+  user: process.env.POSTGRES_USER,
+  password: process.env.POSTGRES_PASSWORD,
+  host: process.env.POSTGRES_SERVICE,
+  port: process.env.POSTGRES_PORT,
+  database: process.env.POSTGRES_DB,
 });
 async function dbconnector(fastify, options) {
   try {

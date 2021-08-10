@@ -1,10 +1,10 @@
 // Require the framework and instantiate it
 const fastify = require('fastify')({ logger: true });
-// const taskRoutes = require('./routes/tasks.routes');
-// const dbconnector = require('./db/db');
+const taskRoutes = require('./routes/tasks.routes');
+const dbconnector = require('./db/db');
 
-// fastify.register(dbconnector);
-// fastify.register(taskRoutes);
+fastify.register(dbconnector);
+fastify.register(taskRoutes);
 fastify.register(require('./routes'));
 
 // Declare a route
